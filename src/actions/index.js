@@ -33,19 +33,19 @@ export const addHero = (hero) => {
 
 export const filtersFetching = () => {
     return {
-        type: 'filters_FETCHING'
+        type: 'FILTERS_FETCHING'
     }
 }
 
 export const filtersFetched = (filters) => {
     return {
-        type: 'filters_FETCHED',
+        type: 'FILTERS_FETCHED',
         payload: filters
     }
 }
 
 export const filtersFetchingError = () => {
     return {
-        type: 'filters_FETCHING_ERROR'
+        type: 'FILTERS_FETCHING_ERROR'
     }
 }

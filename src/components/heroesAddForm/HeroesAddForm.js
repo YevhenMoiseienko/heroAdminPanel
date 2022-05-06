@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import { v4 as uuidv4 } from 'uuid';
 
 import { addHero } from "../../actions";
@@ -19,6 +19,7 @@ const HeroesAddForm = () => {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [element, setElement] = useState('');
+    const {filters, filtersLoadingStatus} = useSelector(state => state);
     const {request} = useHttp();
     const dispatch = useDispatch();
 
@@ -41,6 +42,21 @@ const HeroesAddForm = () => {
             .then(dispatch(addHero(obj)))
             .catch(err => console.log(err))
         resetForm();
+    }
+
+    const filtersOption = (arr, status) => {
+        if (status === 'loading') {
+            return <option>Елементы грузятся</option>
+        } else if (status === 'error') {
+            return <option>Ошибка загрузки елементов</option>
+        }
+
+        if (arr && arr.length > 0) {
+            return arr.map(({name, label}) => {
+                if (name === 'all') return;
+                return <option key={name} value={name}>{label}</option>
+            })
+        }
     }
 
     return (
@@ -81,10 +97,7 @@ const HeroesAddForm = () => {
                     id="element" 
                     name="element">
                     <option >Я владею элементом...</option>
-                    <option value="fire">Огонь</option>
-                    <option value="water">Вода</option>
-                    <option value="wind">Ветер</option>
-                    <option value="earth">Земля</option>
+                    {filtersOption(filters, filtersLoadingStatus)}
                 </select>
             </div>
 
