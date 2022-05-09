@@ -1,8 +1,8 @@
 import {useHttp} from "../../hooks/http.hook";
 import {useDispatch, useSelector} from "react-redux";
-import {useEffect, useCallback} from "react";
+import {useEffect} from "react";
 
-import {filtersFetching, filtersFetched, filtersFetchingError} from "../../actions";
+import {filtersFetching, filtersFetched, filtersFetchingError, filterHeroes} from "../../actions";
 import Spinner from "../spinner/Spinner";
 
 // Задача для этого компонента:
@@ -14,6 +14,7 @@ import Spinner from "../spinner/Spinner";
 
 const HeroesFilters = () => {
     const {filters, filtersLoadingStatus} = useSelector(state => state);
+
     const dispatch = useDispatch();
     const {request} = useHttp();
 
@@ -36,7 +37,7 @@ const HeroesFilters = () => {
         }
         return arr.map(item => {
             const {name, label, className} = item;
-            return <button key={name} className={className} disabled>{label}</button>
+            return <button onClick={() => dispatch(filterHeroes(name))} key={name} className={className}>{label}</button>
         })
     }
 
