@@ -13,7 +13,7 @@ import Spinner from "../spinner/Spinner";
 // Представьте, что вы попросили бэкенд-разработчика об этом
 
 const HeroesFilters = () => {
-    const {filters, filtersLoadingStatus} = useSelector(state => state);
+    const {filters, filtersLoadingStatus} = useSelector(state => state.filters);
 
     const dispatch = useDispatch();
     const {request} = useHttp();
